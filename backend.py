@@ -1,22 +1,20 @@
-from flask import Flask, request, jsonify, render_template
+# backend.py
+from app import app
+from flask import request, jsonify, render_template
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
+# Cargar variables de entorno
 load_dotenv()
 
-# Verify API key is loaded
 print("🔐 OPENROUTER_API_KEY cargada:", os.getenv("OPENROUTER_API_KEY") is not None)
 
-# Initialize OpenAI client
+# Inicializar cliente OpenRouter
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key=os.getenv("OPENROUTER_API_KEY")
 )
-
-# Initialize Flask app
-app = Flask(__name__)
 
 @app.route("/")
 def home():
@@ -39,15 +37,9 @@ def chat():
 
         print(f"📨 Mensaje recibido: {user_input}")
 
-        # Make API call to OpenRouter
         response = client.chat.completions.create(
-            model="deepseek/deepseek-r1-0528:free",  # Using a free model
-            messages=[
-                {
-                    "role": "user",
-                    "content": user_input
-                }
-            ],
+            model="deepseek/deepseek-r1-0528:free",
+            messages=[{"role": "user", "content": user_input}],
             max_tokens=1000,
             temperature=0.7
         )
@@ -68,8 +60,3 @@ def not_found(error):
 @app.errorhandler(500)
 def internal_error(error):
     return jsonify({"error": "Internal server error"}), 500
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    print(f"🚀 Starting server on port {port}")
-    app.run(debug=True, host="0.0.0.0", port=port)
