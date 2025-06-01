@@ -32,7 +32,7 @@ def chat():
         }
 
         payload = {
-            "model": "deepseek/deepseek-r1-0528:free",
+            "model": "mistralai/devstral-small:free",
             "messages": [
                 {"role": "user", "content": user_input}
             ],
