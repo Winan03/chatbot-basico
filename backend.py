@@ -41,7 +41,7 @@ def chat():
 
         # Make API call to OpenRouter
         response = client.chat.completions.create(
-            model="google/gemini-2.0-flash-exp:free",  # Using a free model
+            model="deepseek/deepseek-r1-0528:free",  # Using a free model
             messages=[
                 {
                     "role": "user",
