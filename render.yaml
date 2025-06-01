@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: chatbot-openrouter
+    env: python
+    buildCommand: ""
+    startCommand: "python backend.py"
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false  # Este valor lo ingresarás desde el panel de Render
