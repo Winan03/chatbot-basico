@@ -20,6 +20,9 @@ def home():
 def chat():
     data = request.json
     user_input = data.get("message", "")
+
+    print("📩 Mensaje recibido:", user_input)  # 👈 log para depurar
+
     try:
         response = client.chat.completions.create(
             model="deepseek/deepseek-r1-0528:free",
@@ -28,8 +31,10 @@ def chat():
                 {"role": "user", "content": user_input}
             ]
         )
+        print("✅ Respuesta OpenRouter:", response)
         return jsonify({"response": response.choices[0].message.content})
     except Exception as e:
+        print("❌ Error al llamar a OpenRouter:", str(e))
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
