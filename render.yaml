@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: chatbot-openrouter
+    name: chatbot-basico
     env: python
-    buildCommand: ""
-    startCommand: gunicorn app:app
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
     envVars:
       - key: OPENROUTER_API_KEY
-        sync: false 
+        sync: false  # Solo si la defines manualmente en el panel de Render
