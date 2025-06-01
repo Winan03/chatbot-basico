@@ -21,22 +21,28 @@ def home():
 def chat():
     data = request.json
     user_input = data.get("message", "")
-
-    print("📩 Mensaje recibido:", user_input)  # 👈 log para depurar
-
     try:
+        print(f"📨 Mensaje recibido: {user_input}")
+
         response = client.chat.completions.create(
             model="google/gemini-2.5-pro-exp-03-25",
             messages=[
-                {"role": "system", "content": "Eres un asistente amigable."},
-                {"role": "user", "content": user_input}
+                {
+                    "role": "user",
+                    "content": [
+                        { "type": "text", "text": user_input }
+                    ]
+                }
             ]
         )
-        print("✅ Respuesta OpenRouter:", response)
+
+        print("✅ Respuesta del modelo:", response.choices[0].message.content)
         return jsonify({"response": response.choices[0].message.content})
+
     except Exception as e:
-        print("❌ Error al llamar a OpenRouter:", str(e))
+        print("❌ Error en /chat:", str(e))
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
