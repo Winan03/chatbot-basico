@@ -32,7 +32,7 @@ def chat():
         }
 
         payload = {
-            "model": "mistralai/devstral-small:free",
+            "model": "google/gemma-3n-e4b-it:free",
             "messages": [
                 {"role": "user", "content": user_input}
             ],
